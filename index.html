@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>فرم ثبت‌نام</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="card">
+      <header class="card__header">
+        <h1>ثبت‌نام</h1>
+        <p>اطلاعاتت رو وارد کن تا حسابت ساخته بشه.</p>
+      </header>
+
+      <form id="registerForm" class="form" action="#" method="post">
+        <div class="grid">
+          <div class="field">
+            <label for="firstName">نام</label>
+            <input id="firstName" name="firstName" type="text" placeholder="مثلاً رضا" required />
+          </div>
+
+          <div class="field">
+            <label for="lastName">نام خانوادگی</label>
+            <input id="lastName" name="lastName" type="text" placeholder="مثلاً رضایی" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">ایمیل</label>
+          <input id="email" name="email" type="email" placeholder="name@example.com" required />
+        </div>
+
+        <div class="field">
+          <label for="phone">شماره موبایل</label>
+          <input id="phone" name="phone" type="tel" placeholder="09xxxxxxxxx" inputmode="tel" />
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="password">رمز عبور</label>
+            <input id="password" name="password" type="password" placeholder="حداقل ۸ کاراکتر" minlength="8" required />
+          </div>
+
+          <div class="field">
+            <label for="confirmPassword">تکرار رمز عبور</label>
+            <input id="confirmPassword" name="confirmPassword" type="password" placeholder="دوباره وارد کن" minlength="8" required />
+          </div>
+        </div>
+
+        <label class="checkbox">
+          <input type="checkbox" name="terms" required />
+          <span>با <a href="#" target="_blank" rel="noopener">قوانین و شرایط</a> موافقم.</span>
+        </label>
+
+        <button class="btn" type="submit">ساخت حساب</button>
+<div id="formMsg" class="msg" aria-live="polite"></div>
+
+        <p class="hint">
+          قبلاً ثبت‌نام کردی؟
+
+          <a href="#">ورود</a>
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>
