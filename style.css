@@ -153,7 +153,7 @@ a:hover{ text-decoration: underline; }
 }
 
 /* Responsive */
-@media (max-width: 520px){
+@media (max-width: 2000px){
   .grid{ grid-template-columns: 1fr; }
 }
 

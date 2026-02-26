@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ورود</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <main class="page">
+    <section class="card">
+      <header class="card__header">
+        <h1>لاگین کن </h1>
+        <p>وارد شو ... </p>
+      </header>
+
+      <form id="loginForm" class="form" action="#" method="post">
+        <div class="field">
+          <label for="email">ایمیل</label>
+          <input id="email" name="email" type="email" placeholder="name@example.com" required />
+        </div>
+        
+        <div class="grid">
+          <div class="field">
+            <label for="password">رمز عبور</label>
+            <input id="password" name="password" type="password" placeholder="حداقل ۸ کاراکتر" required />
+          </div>
+        </div>
+
+        <button class="btn" type="submit">ساخت حساب</button>
+        <div id="formMsg" class="msg" aria-live="polite"></div>
+        <p class="hint">
+         ثبت نام نکردی؟؟
+          <a href="#">ثبت نام</a>
+        </p>
+      </form>
+    </section>
+  </main>
+
+  <script src="./script2.js"></script>
+</body>
+
+</html>

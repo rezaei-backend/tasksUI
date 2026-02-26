@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000/api/register";
+const API_URL = "http://127.0.0.1:8000/api/login";
 
 
 function showMsg(el, type, text) {
@@ -21,7 +21,7 @@ function setLoading(btn, isLoading) {
 }
 
 
-const form = document.getElementById("registerForm");
+const form = document.getElementById("loginForm");
 const msgBox = document.getElementById("formMsg");
 
 form.addEventListener("submit", async (e) => {
@@ -30,15 +30,12 @@ form.addEventListener("submit", async (e) => {
 
   const submitBtn = form.querySelector('button[type="submit"]');
 
-
-  const name = form.name.value.trim();
   const email = form.email.value.trim();
   const password = form.password.value;
-  const password_confirmation = form.password_confirmation.value;
-  const termsAccepted = form.terms.checked;
 
 
-  if (!name || !email || !password || !password_confirmation) {
+
+  if (!email || !password) {
     showMsg(msgBox, "err", "لطفاً همه فیلدهای ضروری را کامل کنید.");
     return;
   }
@@ -48,21 +45,10 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  if (password !== password_confirmation) {
-    showMsg(msgBox, "err", "رمز عبور و تکرار آن یکسان نیستند.");
-    return;
-  }
-
-  if (!termsAccepted) {
-    showMsg(msgBox, "err", "برای ادامه باید قوانین و شرایط را تایید کنید.");
-    return;
-  }
 
   const payload = {
-    name,
     email,
     password,
-    password_confirmation,
   };
 
   try {
@@ -72,8 +58,6 @@ form.addEventListener("submit", async (e) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json"
-
       },
       body: JSON.stringify(payload),
     });
@@ -90,7 +74,6 @@ form.addEventListener("submit", async (e) => {
     }
 
     if (!res.ok) {
-      // پیام خطا از سرور (اگر موجود باشد)
       const serverMsg =
         data?.message ||
         data?.error ||
@@ -98,11 +81,24 @@ form.addEventListener("submit", async (e) => {
       showMsg(msgBox, "err", serverMsg);
       return;
     }
+    if (!res.ok) {
 
+      if (data?.errors) {
+        const firstError = Object.values(data.errors)[0][0];
+        showMsg(msgBox, "err", firstError);
+      } else {
+        showMsg(msgBox, "err", data?.message || "خطایی رخ داد");
+      }
+
+      return;
+    }
+
+    const token = data.token;
+    console.log(token);
     // موفقیت
-    const okMsg = data?.message || "ثبت‌نام با موفقیت انجام شد ✅";
+    const okMsg = data?.message || "ورود با موفقیت انجام شد ✅";
     showMsg(msgBox, "ok", okMsg);
-
+    console.log(res);
     form.reset();
   } catch (err) {
     showMsg(msgBox, "err", "مشکل در اتصال به سرور. اینترنت یا آدرس API را چک کنید.");
