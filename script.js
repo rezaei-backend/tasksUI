@@ -1,6 +1,6 @@
 const API_URL = "http://localhost:8000/api/register"; 
 
-// ===== ابزارهای کوچک =====
+
 function showMsg(el, type, text) {
   el.classList.remove("msg--ok", "msg--err");
   el.classList.add(type === "ok" ? "msg--ok" : "msg--err");
@@ -20,7 +20,7 @@ function setLoading(btn, isLoading) {
   btn.textContent = isLoading ? "در حال ارسال..." : btn.dataset.originalText;
 }
 
-// ===== منطق فرم =====
+
 const form = document.getElementById("registerForm");
 const msgBox = document.getElementById("formMsg");
 
@@ -30,17 +30,15 @@ form.addEventListener("submit", async (e) => {
 
   const submitBtn = form.querySelector('button[type="submit"]');
 
-  // گرفتن مقادیر
-  const firstName = form.firstName.value.trim();
-  const lastName = form.lastName.value.trim();
+
+  const name = form.name.value.trim();
   const email = form.email.value.trim();
-  const phone = form.phone.value.trim();
   const password = form.password.value;
-  const confirmPassword = form.confirmPassword.value;
+  const password_confirmation = form.password_confirmation.value;
   const termsAccepted = form.terms.checked;
 
-  // ولیدیشن سمت کلاینت
-  if (!firstName || !lastName || !email || !password || !confirmPassword) {
+
+  if (!name || !email || !password || !password_confirmation) {
     showMsg(msgBox, "err", "لطفاً همه فیلدهای ضروری را کامل کنید.");
     return;
   }
@@ -50,7 +48,7 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  if (password !== confirmPassword) {
+  if (password !== password_confirmation) {
     showMsg(msgBox, "err", "رمز عبور و تکرار آن یکسان نیستند.");
     return;
   }
@@ -60,14 +58,11 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  // بدنه‌ی درخواست به API
-  // اگر بک‌اند شما نام فیلدها را متفاوت می‌خواهد، همینجا تغییر بده.
   const payload = {
-    firstName,
-    lastName,
+    name,
     email,
-    phone: phone || null,
     password,
+    password_confirmation,
   };
 
   try {
@@ -77,13 +72,13 @@ form.addEventListener("submit", async (e) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // اگر توکن داری اینجا بفرست:
-        // "Authorization": "Bearer <token>"
+        
+
       },
       body: JSON.stringify(payload),
     });
 
-    // تلاش برای خواندن پاسخ JSON (حتی در خطا)
+
     let data = null;
     const contentType = res.headers.get("content-type") || "";
     if (contentType.includes("application/json")) {
@@ -108,10 +103,6 @@ form.addEventListener("submit", async (e) => {
     const okMsg = data?.message || "ثبت‌نام با موفقیت انجام شد ✅";
     showMsg(msgBox, "ok", okMsg);
 
-    // اگر خواستی بعد از موفقیت ریدایرکت کنی:
-    // window.location.href = "/login";
-
-    // پاک کردن فرم
     form.reset();
   } catch (err) {
     showMsg(msgBox, "err", "مشکل در اتصال به سرور. اینترنت یا آدرس API را چک کنید.");
